@@ -1,0 +1,133 @@
+# app/config/fields.yaml
+# Logical field names to nested document paths in different collections (los/title/appraisal/credit_report/drive_report).
+# Add or change paths according to your actual MongoDB document structure.
+
+los:
+  purpose_of_loan:
+    path: "URLA Lender.Property and Loan Information.Purpose of Loan"
+    default: ""
+  no_units:
+    path: "URLA Lender.Property and Loan Information.No Units"
+    default: 1
+  property_will_be:
+    path: "URLA Lender.Property and Loan Information.Property Will Be"
+    default: ""
+  amortization_type:
+    path: "URLA Lender.Property and Loan Information.Mortgage Loan Information.Amortization Type"
+    default: ""
+  mortgage_type_applied_for:
+    path: "URLA Lender.Property and Loan Information.Mortgage Loan Information.Mortgage Type Applied for"
+    default: ""
+  investor:
+    path: "Loan Details.Investor"
+    default: ""
+  underwriting_risk_assess_type:
+    path: "Loan Details.Underwriting Risk Assess Type"
+    default: ""
+  ltv:
+    path: "Loan Details.LTV"
+    default: None
+  cltv:
+    path: "Loan Details.CLTV"
+    default: None
+  hcltv:
+    path: "Loan Details.HCLTV"
+    default: None
+  dti:
+    path: "Loan Details.DTI"
+    default: None
+  average_representative_credit_score:
+    path: "Loan Details.Average Represetative Credit Score"
+    default: None
+  loan_program_detail:
+    path: "Loan Details.Loan Program Detail"
+    default: ""
+  property_type:
+    path: "URLA Lender.Property and Loan Information.Property Type"
+    default: ""
+  estimated_closing_date:
+    path: "Disclosure Dates.Compliance Timeline.Date Tracking.Estimated Closing Date"
+    default: ""
+  loan_amount:
+    path: "URLA Lender.Property and Loan Information.Terms of Loan.Loan Amount"
+    default: None
+  cash_to_borrower:
+    path: "URLA 5.Closing Details.Summary of Transaction.Cash to Borrower"
+    default: 0
+  cash_from_borrower:
+    path: "URLA 5.Closing Details.Summary of Transaction.Cash From Borrower"
+    default: 0
+  current_address_housing:
+    path: "URLA 1.Section 1: Borrower Information.1a. Personal Information - Borrower.Current Address.Housing"
+    default: {}
+  previous_address_housing:
+    path: "URLA 1.Section 1: Borrower Information.1a. Personal Information - Borrower.Former Address.Housing"
+    default: {}
+  section_5a_ownership:
+    path: "URLA 4.Loan and Property Information.5a. About this Property and Your Money for this Loan.If YES, have you had an ownership interest in another property in the last three years?.Borrower"
+    default: ""
+  homebuyer_education_certificate:
+    path: "Borrower.Has The Borrower Completed Homeownership education(Group or web based classes) within the last 12 months?"
+    default: "No"
+  total_income:
+    path: "URLA 2.Borrower: Current/Self Employment and income.Total"
+    default: 0
+  liabilities_will_be_paid_off:
+    path: "URLA 3.Liabilities Detail.Will be paid off"
+    default: "No"
+  liabilities_account_type:
+    path: "URLA 3.Liabilities Detail.Account Type"
+    default: ""
+  liabilities_subject_property:
+    path: "URLA 3.Liabilities Detail.Subject Property"
+    default: "No"
+  liabilities_name:
+    path: "URLA 3.Liabilities Detail.Name"
+    default: ""
+  liabilities_account_number:
+    path: "URLA 3.Liabilities Detail.Account Number"
+    default: ""
+  gift_amount:
+    path: "URLA 5.Closing Details.Summary of Transaction.Gift Amount"
+    default: 0
+  area_median_income:
+    path: "URLA 6.Area Median Income"
+    default: None
+
+title:
+  chain_title_date:
+    path: "PropertyInfo.ChainOfTitle.Date"
+    default: ""
+
+appraisal:
+  appraisal_effective_date:
+    path: "Appraisal.EffectiveDate"
+    default: ""
+  prior_sale_date:
+    path: "Appraisal.PriorSale.Date"
+    default: ""
+
+credit_report:
+  tradelines:
+    path: "CreditReport.Tradelines"
+    default: []
+
+drive_report:
+  fraud_alert:
+    path: "Drive.FraudAlerts.Level"
+    default: ""
+  fraud_recorded_date:
+    path: "Drive.FraudAlerts.DateRecorded"
+    default: ""
+  drive_street:
+    path: "Drive.Property.Address.Street"
+    default: ""
+  drive_city:
+    path: "Drive.Property.Address.City"
+    default: ""
+  drive_state:
+    path: "Drive.Property.Address.State"
+    default: ""
+  drive_unit:
+    path: "Drive.Property.Address.Unit"
+    default: ""

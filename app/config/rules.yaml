@@ -1,0 +1,397 @@
+# app/config/rules.yaml
+# Rules 1-12 (LTV family) + Rules 13-28 exactly as you specified.
+
+rules:
+  - id: "PPV-0001"
+    name: "LTV/CLTV/HCLTV - Primary Purchase & No Cash-Out - 1 Unit - Fixed Rate - FNMA/DU"
+    type: "simple"
+    validator: "LTVValidator"
+    trigger:
+      purpose_of_loan: ["Purchase","No Cash-Out Refinance"]
+      no_units: [1]
+      property_will_be: ["Primary"]
+      amortization_type: ["Fixed Rate"]
+      mortgage_type_applied_for: ["Conventional"]
+      or:
+        - investor: ["Fannie Mae"]
+        - underwriting_risk_assess_type: ["DU"]
+    thresholds:
+      ltv: 97
+      cltv: 97
+      hcltv: 97
+    alert_message: "LTV/CLTV/HCLTV is exceeding threshold limit for Fannie Mae Fixed Rate - 1 unit Primary Residence."
+
+  - id: "PPV-0002"
+    name: "LTV - Primary Purchase - 1 Unit - Adjustable Rate"
+    type: "simple"
+    validator: "LTVValidator"
+    trigger:
+      purpose_of_loan: ["Purchase", "No Cash-Out Refinance"]
+      no_units: [1]
+      property_will_be: ["Primary"]
+      amortization_type: ["Adjustable Rate"]
+      mortgage_type_applied_for: ["Conventional"]
+      or:
+        - investor: ["Fannie Mae"]
+        - underwriting_risk_assess_type: ["DU"]
+    thresholds:
+      ltv: 95
+      cltv: 95
+      hcltv: 95
+    alert_message: "LTV/CLTV/HCLTV is exceeding threshold limit for Fannie Mae Adjustable Rate - 1 unit Primary Residence."
+
+  - id: "PPV-0003"
+    name: "LTV - Primary Purchase - 2-4 Units - All Amortization"
+    type: "simple"
+    validator: "LTVValidator"
+    trigger:
+      purpose_of_loan: ["Purchase", "No Cash-Out Refinance"]
+      no_units: [2,3,4]
+      property_will_be: ["Primary"]
+      or:
+        - investor: ["Fannie Mae"]
+        - underwriting_risk_assess_type: ["DU"]
+    
+    thresholds:
+      ltv: 95
+      cltv: 95
+      hcltv: 95
+    alert_message: "LTV/CLTV/HCLTV is exceeding threshold limit for Fannie Mae - 2 to 4 unit Primary Residence."
+
+  - id: "PPV-0004"
+    name: "LTV - Second Home Purchase / No Cash-Out - 1 Unit"
+    type: "simple"
+    validator: "LTVValidator"
+    trigger:
+      purpose_of_loan: ["Purchase", "No Cash-Out Refinance"]
+      no_units: [1]
+      property_will_be: ["Secondary", "Second", "Second Home"]
+      mortgage_type_applied_for: ["Conventional"]
+      or:
+        - investor: ["Fannie Mae"]
+        - underwriting_risk_assess_type: ["DU"]
+    thresholds:
+      ltv: 90
+      cltv: 90
+      hcltv: 90
+    alert_message: "LTV/CLTV/HCLTV is exceeding threshold limit for Fannie Mae - 1 unit Secondary Residence."
+
+  - id: "PPV-0005"
+    name: "LTV - Investment Purchase - 1 Unit"
+    type: "simple"
+    validator: "LTVValidator"
+    trigger:
+      purpose_of_loan: ["Purchase"]
+      no_units: [1]
+      property_will_be: ["Investment"]
+      mortgage_type_applied_for: ["Conventional"]
+      or:
+        - investor: ["Fannie Mae"]
+        - underwriting_risk_assess_type: ["DU"]
+    thresholds:
+      ltv: 85
+      cltv: 85
+      hcltv: 85
+    alert_message: "LTV/CLTV/HCLTV is exceeding threshold limit for Fannie Mae - 1 unit Investment Home Purchase."
+
+  - id: "PPV-0006"
+    name: "LTV - Investment Purchase - 2-4 Units"
+    type: "simple"
+    validator: "LTVValidator"
+    trigger:
+      purpose_of_loan: ["Purchase"]
+      no_units: [2,3,4]
+      property_will_be: ["Investment"]
+      mortgage_type_applied_for: ["Conventional"]
+      or:
+        - investor: ["Fannie Mae"]
+        - underwriting_risk_assess_type: ["DU"]
+    thresholds:
+      ltv: 75
+      cltv: 75
+      hcltv: 75
+    alert_message: "LTV/CLTV/HCLTV is exceeding threshold limit for Fannie Mae - 2 to 4 unit Investment Home Purchase."
+
+  - id: "PPV-0007"
+    name: "LTV - Investment No Cash-Out Refi - All Units"
+    type: "simple"
+    validator: "LTVValidator"
+    trigger:
+      purpose_of_loan: ["No Cash-Out Refinance"]
+      property_will_be: ["Investment"]
+      no_units: [1,2,3,4]
+      mortgage_type_applied_for: ["Conventional"]
+      or:
+        - investor: ["Fannie Mae"]
+        - underwriting_risk_assess_type: ["DU"]
+    thresholds:
+      ltv: 75
+      cltv: 75
+      hcltv: 75
+    alert_message: "LTV/CLTV/HCLTV is exceeding threshold limit for Fannie Mae - Investment Home No Cash Out refinance."
+
+  - id: "PPV-0008"
+    name: "LTV - Primary Cash-Out Refinance - 1 Unit"
+    type: "simple"
+    validator: "LTVValidator"
+    trigger:
+      purpose_of_loan: ["Cash-Out Refinance"]
+      no_units: [1]
+      property_will_be: ["Primary"]
+      mortgage_type_applied_for: ["Conventional"]
+      or:
+        - investor: ["Fannie Mae"]
+        - underwriting_risk_assess_type: ["DU"]
+    thresholds:
+      ltv: 80
+      cltv: 80
+      hcltv: 80
+    alert_message: "LTV/CLTV/HCLTV is exceeding threshold limit for Fannie Mae - 1 Unit Primary Residence Cash Out refinance."
+
+  - id: "PPV-0009"
+    name: "LTV - Primary Cash-Out - 2-4 Units"
+    type: "simple"
+    validator: "LTVValidator"
+    trigger:
+      purpose_of_loan: ["Cash-Out Refinance"]
+      no_units: [2,3,4]
+      property_will_be: ["Primary"]
+      mortgage_type_applied_for: ["Conventional"]
+      or:
+        - investor: ["Fannie Mae"]
+        - underwriting_risk_assess_type: ["DU"]
+    thresholds:
+      ltv: 75
+      cltv: 75
+      hcltv: 75
+    alert_message: "LTV/CLTV/HCLTV is exceeding threshold limit for Fannie Mae - 2 to 4 Unit Primary Residence Cash Out refinance."
+
+  - id: "PPV-0010"
+    name: "LTV - Second Home Cash-Out - 1 Unit"
+    type: "simple"
+    validator: "LTVValidator"
+    trigger:
+      purpose_of_loan: ["Cash-Out Refinance"]
+      no_units: [1]
+      property_will_be: ["Secondary", "Second", "Second Home"]
+      mortgage_type_applied_for: ["Conventional"]
+      or:
+        - investor: ["Fannie Mae"]
+        - underwriting_risk_assess_type: ["DU"]
+    thresholds:
+      ltv: 75
+      cltv: 75
+      hcltv: 75
+    alert_message: "LTV/CLTV/HCLTV is exceeding threshold limit for Fannie Mae - 1 Unit Secondary Residence Cash Out refinance."
+
+  - id: "PPV-0011"
+    name: "LTV - Investment Cash-Out - 1 Unit"
+    type: "simple"
+    validator: "LTVValidator"
+    trigger:
+      purpose_of_loan: ["Cash-Out Refinance"]
+      no_units: [1]
+      property_will_be: ["Investment"]
+      mortgage_type_applied_for: ["Conventional"]
+      or:
+        - investor: ["Fannie Mae"]
+        - underwriting_risk_assess_type: ["DU"]
+    thresholds:
+      ltv: 75
+      cltv: 75
+      hcltv: 75
+    alert_message: "LTV/CLTV/HCLTV is exceeding threshold limit for Fannie Mae - 1 Unit Investment Home Cash Out refinance."
+
+  - id: "PPV-0012"
+    name: "LTV - Investment Cash-Out - 2-4 Units"
+    type: "simple"
+    validator: "LTVValidator"
+    trigger:
+      purpose_of_loan: ["Cash-Out Refinance"]
+      no_units: [2,3,4]
+      property_will_be: ["Investment"]
+      mortgage_type_applied_for: ["Conventional"]
+      or:
+        - investor: ["Fannie Mae"]
+        - underwriting_risk_assess_type: ["DU"]
+    thresholds:
+      ltv: 70
+      cltv: 70
+      hcltv: 70
+    alert_message: "LTV/CLTV/HCLTV is exceeding threshold limit for Fannie Mae - 2 to 4 Unit Investment Home Cash Out refinance."
+
+# 13 - 28 as specified by you:
+  - id: "PPV-0013"
+    name: "DTI Limit for Conventional Purchase / No Cash-Out"
+    type: "complex"
+    validator: "DTIValidator"
+    trigger:
+      mortgage_type_applied_for: ["Conventional"]
+      purpose_of_loan: ["Purchase", "No Cash-Out Refinance"]
+    params:
+      dti_limit: 50
+    alert_message: "DTI exceeds 50%."
+
+  - id: "PPV-0014"
+    name: "HomeReady/Home Possible Occupancy"
+    type: "complex"
+    validator: "OccupancyValidator"
+    trigger:
+      mortgage_type_applied_for: ["Conventional"]
+      loan_program_detail: ["Home Ready", "Home Possible"]
+    alert_message: "Property must be primary for HomeReady/Home Possible."
+
+  - id: "PPV-0015"
+    name: "Second Home - Unit must be 1"
+    type: "complex"
+    validator: "SecondHomeValidator"
+    trigger:
+      mortgage_type_applied_for: ["Conventional"]
+      property_will_be: ["Secondary", "Second", "Second Home"]
+    alert_message: "Second home must be single unit."
+
+  - id: "PPV-0016"
+    name: "Investment property not manufactured"
+    type: "complex"
+    validator: "InvestmentValidator"
+    trigger:
+      mortgage_type_applied_for: ["Conventional"]
+      property_will_be: ["Investment"]
+    alert_message: "Investment property cannot be manufactured housing."
+
+  - id: "PPV-0017"
+    name: "Average Representative Credit Score Minimum"
+    type: "complex"
+    validator: "CreditScoreValidator"
+    trigger:
+      mortgage_type_applied_for: ["Conventional"]
+    params:
+      min_fico: 620
+    alert_message: "Average Representative Credit Score is below 620."
+
+  - id: "PPV-0018"
+    name: "Gift funds condition for LTV>80 and multi-unit or secondary"
+    type: "condition_only"
+    validator: "GiftValidator"
+    trigger:
+      mortgage_type_applied_for: ["Conventional"]
+      ltv: ["GT80"]
+      # the trigger is satisfied if any of these - later dispatcher will treat GT tokens correctly
+      no_units: [2,3,4]
+      property_will_be: ["Secondary", "Second", "Second Home"]
+    alert_message: "Borrower is using gift funds for down payment, please check if 5% minimum borrower contribution are from their own funds."
+
+  - id: "PPV-0019"
+    name: "Cash-Out Tradeline Match and Seasoning"
+    type: "complex"
+    validator: "CashoutSeasoningValidator"
+    trigger:
+      mortgage_type_applied_for: ["Conventional"]
+      purpose_of_loan: ["Cash-Out Refinance"]
+      liabilities_will_be_paid_off: ["Yes"]
+      liabilities_account_type: ["Mortgage"]
+      liabilities_subject_property: ["Yes"]
+    params:
+      name_match_threshold: 70
+      seasoning_months: 12
+    alert_message: "Cash-out seasoning / tradeline matching failed."
+
+  - id: "PPV-0020"
+    name: "Chain of Title Seasoning for Cash-Out"
+    type: "complex"
+    validator: "TitleValidator"
+    trigger:
+      mortgage_type_applied_for: ["Conventional"]
+      purpose_of_loan: ["Cash-Out Refinance"]
+    params:
+      min_months: 6
+    alert_message: "Chain of title seasoning requirement not met."
+
+  - id: "PPV-0021"
+    name: "Drive Report Fraud Recorded Date vs Closing"
+    type: "complex"
+    validator: "FraudValidator"
+    trigger:
+      mortgage_type_applied_for: ["Conventional"]
+      purpose_of_loan: ["Cash-Out Refinance"]
+      fraud_alert: ["ANY"]
+    params:
+      max_months: 6
+    alert_message: "Fraud recording date within 6 months of estimated closing."
+
+  - id: "PPV-0022"
+    name: "Appraisal Prior Sale Seasoning"
+    type: "complex"
+    validator: "AppraisalPriorSaleValidator"
+    trigger:
+      mortgage_type_applied_for: ["Conventional"]
+      purpose_of_loan: ["Cash-Out Refinance"]
+    params:
+      min_months: 6
+    alert_message: "Prior sale seasoning requirement not met."
+
+  - id: "PPV-0023"
+    name: "HomeReady/Home Possible must be Fixed Rate"
+    type: "complex"
+    validator: "LoanProgramValidator"
+    trigger:
+      loan_program_detail: ["HomeReady", "Home Possible"]
+      mortgage_type_applied_for: ["Conventional"]
+    alert_message: "HomeReady/Home Possible require Fixed Rate amortization."
+
+  - id: "PPV-0024"
+    name: "Cash From/To Borrower Negative Amount Limit"
+    type: "complex"
+    validator: "CashbackValidator"
+    trigger:
+      mortgage_type_applied_for: ["Conventional"]
+      purpose_of_loan: ["No Cash-Out Refinance"]
+    params:
+      percent_limit: 0.01
+      absolute_limit: 2000
+    alert_message: "Negative cash amount exceeds allowed limit."
+
+  - id: "PPV-0025"
+    name: "Homebuyer Education Certificate Requirement (Condition)"
+    type: "condition_only"
+    validator: "HomebuyerProgramValidator"
+    trigger:
+      loan_program_detail: ["HomeReady", "Home Possible", "HomeOne"]
+      current_address_housing: ["Rent", "No Housing expense"]
+      previous_address_housing: ["Rented", "No Primary Housing expenses", ""]
+      section_5a_ownership: ["Yes"]
+    condition_message: "Homebuyer Education Certificate is missing."
+
+  - id: "PPV-0026"
+    name: "First-time homebuyer LTV>95 Condition"
+    type: "condition_only"
+    validator: "HomebuyerLTVValidator"
+    trigger:
+      purpose_of_loan: ["Purchase"]
+      ltv: ["GT95"]
+      current_address_housing: ["Rent", "No Housing expense"]
+      previous_address_housing: ["Rented", "No Primary Housing expenses", ""]
+      section_5a_ownership: ["No"]
+    params:
+      max_ltv: 95
+    condition_message: "Homebuyer Education Certificate is missing for high LTV first-time buyer."
+
+  - id: "PPV-0027"
+    name: "AMI Income Limit for HomeReady/Home Possible"
+    type: "complex"
+    validator: "IncomeValidator"
+    trigger:
+      loan_program_detail: ["HomeReady", "Home Possible"]
+    params:
+      area_median_income: 60000
+    alert_message: "Total income exceeds area median income limit."
+
+  - id: "PPV-0028"
+    name: "Lien Payoff - count and account type"
+    type: "complex"
+    validator: "LienPayoffValidator"
+    trigger:
+      mortgage_type_applied_for: ["Conventional"]
+      purpose_of_loan: ["No Cash-Out Refinance"]
+      liabilities_will_be_paid_off: ["Yes"]
+    alert_message: "Multiple liabilities or non-mortgage liability being paid off."
