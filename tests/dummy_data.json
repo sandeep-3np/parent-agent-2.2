@@ -1,3 +1,4 @@
+
 {
   "los": {
     "loan_id": "LOAN-123",
@@ -8,38 +9,53 @@
       "DTI": 55,
       "Investor": "Fannie Mae",
       "Average Represetative Credit Score": 610,
-      "Loan Program Detail": "Manufactured Housing"
+      "Loan Program Detail": "HomeReady"
+    },
+    "Disclosure Dates": {
+      "Estimated Closing Date": "10-10-2020"
     },
     "URLA Lender": {
       "Property and Loan Information": {
         "Purpose of Loan": "No Cash-Out Refinance",
         "No Units": 3,
         "Property Will Be": "Secondary",
+        "Street Address":"123 Main St",
+        "City" : "Anytown",
+        "State": "CA",
+        "Unit" : "15" ,
         "Mortgage Loan Information": {
-          "Amortization Type": "Fixed",
+          "Amortization Type": "Adjustable Rate",
           "Mortgage Type Applied for": "Conventional"
         },
         "Terms of Loan": {
-          "Loan Amount": 200000
+          "Loan Amount": 100000
         }
       },
       "Loan Program": "FNMA"
     },
-    "URLA 5.Closing Details.Summary of Transaction": {
-      "Cash to Borrower": -2500,
-      "Gift Amount": 20
-    },
-    "URLA 3.Liabilities Detail": {
+    "URLA 5": {
+  "Closing Details": {
+    "Summary of Transaction": {
+      "Gift Amount": 20,
+      "Cash to Borrower": -1500,
+      "Cash From Borrower" :0
+    }
+  }
+},
+    "URLA 3":{
+      "Liabilities Detail": {
       "Will be paid off": "Yes",
       "Account Type": "Mortgage",
-      "Name": "Liab1",
-      "Account Number": "1234567890"
-    },
-    "URLA 1.Section 1: Borrower Information.1a. Personal Information - Borrower.Current Address.Housing": {
+      "Name": "L",
+      "Account Number": "xxxxx7890",
+      "Subject Property" : "Yes"
+    }
+  },
+    "URLA 1 Section 1: Borrower Information 1a Personal Information - Borrower Current Address Housing": {
       "Street": "123 Main St",
       "City": "Anytown",
       "State": "CA",
-      "Unit": ""
+      "Unit": "15"
     },
     "URLA 2.Borrower: Current/Self Employment and income.Total": 50000,
     "URLA 6.Area Median Income": 60000,
@@ -49,31 +65,26 @@
   "title": {
     "PropertyInfo": {
       "ChainOfTitle": {
-        "Date": "2025-06-01"
+        "Date": "01-07-2020"
       }
     }
   },
   "appraisal": {
     "Appraisal": {
-      "EffectiveDate": "2025-01-01",
+      "EffectiveDate": "2024-04-15",
       "PriorSale": {
-        "Date": "2025-04-01"
+        "Date": "10-01-2020"
       }
     }
   },
   "credit_report": {
-    "Tradelines": [
+    "Tradelines": 
       {
-        "Creditor_Account_Number": "6789012345",
-        "Creditor_Name": "Bank A",
-        "Date_Opened": "2019-01-01"
-      },
-      {
-        "Creditor_Account_Number": "7890123456",
-        "Creditor_Name": "Mortgage Co",
-        "Date_Opened": "2022-01-01"
+        "Creditor Account Number": "6789017890",
+        "Creditor Name": "Liab1",
+        "Date_Opened": "01-15-2020"
       }
-    ]
+    
   },
   "drive_report": {
     "Drive": {
@@ -82,12 +93,12 @@
           "Street": "123 Main St",
           "City": "Anytown",
           "State": "CA",
-          "Unit": ""
+          "Unit": "15"
         }
       },
       "FraudAlerts": {
         "Level": "Low",
-        "DateRecorded": "2025-01-01"
+        "DateRecorded": "10-01-2020"
       }
     }
   }

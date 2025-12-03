@@ -98,63 +98,97 @@ class CreditScoreValidator(BaseValidator):
 
 class GiftValidator(BaseValidator):
     def evaluate(self, rule, context, resolver):
-        # Rule 18: CONDITION only if gift amount > 0 (or cash_to_borrower positive)
+        # Rule 18: CONDITION only if gift amount > 0 
         gift_amount = resolver.resolve(context, 'los', 'gift_amount')
         cash_to = resolver.resolve(context, 'los', 'cash_to_borrower')
-        details = {'gift_amount': gift_amount, 'cash_to_borrower': cash_to}
+        details = {'gift_amount': gift_amount}
         try:
             g = float(gift_amount) if gift_amount is not None else 0.0
         except:
             g = 0.0
-        try:
-            c = float(cash_to) if cash_to is not None else 0.0
-        except:
-            c = 0.0
-        if g > 0 or c > 0:
-            return self.condition_result(rule, message=rule.get('alert_message'), details=details)
+       
+        if g > 0 :
+            return self.alert_result(rule, message=rule.get('alert_message'), details=details)
         return self.pass_result(rule, details=details)
 
 class CashoutSeasoningValidator(BaseValidator):
     def evaluate(self, rule, context, resolver):
-        # Rule 19: Two-step matching
-        # Step (i): liabilities account last4 + name fuzzy match with tradelines
-        # Step (ii): if (i) pass, check seasoning months > 12 between tradeline date opened & estimated closing
+        # STEP 0 — Resolve core fields
         liabilities_acc = resolver.resolve(context, 'los', 'liabilities_account_number') or ""
         liabilities_name = resolver.resolve(context, 'los', 'liabilities_name') or ""
         est_close = resolver.resolve(context, 'los', 'estimated_closing_date')
-        credit = context.get('credit_report', {})
-        details = {'liabilities_account_number': liabilities_acc, 'liabilities_name': liabilities_name, 'estimated_closing_date': est_close}
-        tradelines = []
-        if isinstance(credit, dict):
-            tradelines = resolver = credit.get('Tradelines') or credit.get('tradelines') or credit.get('TradeLines') or []
-        matched = None
-        if not tradelines:
+        details = {
+            'liabilities_account_number': liabilities_acc,
+            'liabilities_name': liabilities_name,
+            'estimated_closing_date': est_close
+        }
+
+        # STEP 1 — Extract tradelines (dict or list)
+        tradelines_raw = context.get("credit_report", {}).get("Tradelines")
+
+        if not tradelines_raw:
             return self.not_applicable_result(rule)
+
+        # If Tradelines is a dict, convert to list
+        if isinstance(tradelines_raw, dict):
+            tradelines = [tradelines_raw]
+        else:
+            tradelines = tradelines_raw
+
+        # STEP (i): Match last 4 + fuzzy name
         last4 = str(liabilities_acc)[-4:] if liabilities_acc else ""
+        matched = None
+
         for t in tradelines:
-            # standard keys: Creditor_Account_Number, Creditor_Name, Date_Opened
-            accno = str(t.get('Creditor_Account_Number', '') or t.get('AccountNumber', '') or t.get('Account_Number', ''))
-            acc_last4 = accno[-4:] if accno else ""
-            creditor_name = t.get('Creditor_Name') or t.get('Creditor') or t.get('CreditorName') or ""
+            acc_no = t.get("Creditor Account Number") or t.get("Creditor_Account_Number") or ""
+            acc_last4 = str(acc_no)[-4:] if acc_no else ""
+            creditor_name = t.get("Creditor Name") or t.get("Creditor_Name") or ""
+
             if last4 and acc_last4 and last4 == acc_last4:
+                # fuzzy match name
                 score = fuzzy_ratio(creditor_name, liabilities_name)
-                details.update({'matched_account_last4': acc_last4, 'creditor_name': creditor_name, 'fuzzy_score': score})
-                if score >= rule.get('params', {}).get('name_match_threshold', 70):
+                details.update({
+                    'matched_account_last4': acc_last4,
+                    'creditor_name': creditor_name,
+                    'fuzzy_score': score
+                })
+                if score >= 70:  # default threshold
                     matched = t
                     break
+
+        # If STEP (i) fails ⇒ alert, STOP HERE
         if not matched:
-            return self.alert_result(rule, message="The mortgage being paid off is not reported on credit report  please review reasoning requirement.", details=details)
-        # Step (ii)
-        date_opened = matched.get('Date_Opened') or matched.get('OpenedDate') or matched.get('DateOpened')
+            return self.alert_result(
+                rule,
+                message="The mortgage being paid off is not reported on credit report  please review reasoning requirement.",
+                details=details
+            )
+
+        # STEP (ii): Seasoning check (> 12 months)
+        date_opened = matched.get("Date_Opened")
+
         if not date_opened or not est_close:
             return self.not_applicable_result(rule)
-        try:
-            months = months_between(parse_date(date_opened), parse_date(est_close))
-        except:
+
+        d_open = parse_date(date_opened)
+        d_close = parse_date(est_close)
+
+        if not d_open or not d_close:
             return self.not_applicable_result(rule)
-        if months <= rule.get('params', {}).get('seasoning_months', 12):
-            return self.alert_result(rule, message="The seasoning requirement for cash out refinance is not met, review and proceed", details=details)
+
+        from app.utils.date_utils import months_between
+        months = months_between(d_open, d_close)
+
+        if months <= 12:
+            return self.alert_result(
+                rule,
+                message="The seasoning requirement for cash out refinance is not met, review and proceed",
+                details=details
+            )
+
+        # All good
         return self.pass_result(rule, details=details)
+
 
 class TitleValidator(BaseValidator):
     def evaluate(self, rule, context, resolver):
@@ -183,13 +217,15 @@ class FraudValidator(BaseValidator):
         dr_state = resolver.resolve(context, 'drive_report', 'drive_state')
         dr_unit = resolver.resolve(context, 'drive_report', 'drive_unit')
         # subject property address - using current_address_housing expected to be dict with Street/City/State/Unit
-        subj_addr = resolver.resolve(context, 'los', 'current_address_housing') or {}
-        subj_street = (subj_addr.get('Street') if isinstance(subj_addr, dict) else subj_addr) or ""
-        subj_city = (subj_addr.get('City') if isinstance(subj_addr, dict) else "") or ""
-        subj_state = (subj_addr.get('State') if isinstance(subj_addr, dict) else "") or ""
-        subj_unit = (subj_addr.get('Unit') if isinstance(subj_addr, dict) else "") or ""
+       
+        subj_street = resolver.resolve(context, 'los', 'urla_lender_subject_street')
+        subj_city = resolver.resolve(context, 'los', 'urla_lender_subject_city')
+        subj_state = resolver.resolve(context, 'los', 'urla_lender_subject_state')
+        subj_unit = resolver.resolve(context, 'los', 'urla_lender_subject_unit')
         details = {'drive_addr': {'street': dr_street, 'city': dr_city, 'state': dr_state, 'unit': dr_unit},
                    'subject_addr': {'street': subj_street, 'city': subj_city, 'state': subj_state, 'unit': subj_unit}}
+        print(dr_street)
+        print(subj_street)
         # exact normalized comparison
         if normalize_string(dr_street) != normalize_string(subj_street) or \
            normalize_string(dr_city) != normalize_string(subj_city) or \
@@ -210,6 +246,7 @@ class FraudValidator(BaseValidator):
         return self.pass_result(rule, details=details)
 
 class AppraisalPriorSaleValidator(BaseValidator):
+
     def evaluate(self, rule, context, resolver):
         prior_sale = resolver.resolve(context, 'appraisal', 'prior_sale_date')
         est_close = resolver.resolve(context, 'los', 'estimated_closing_date')
@@ -257,7 +294,7 @@ class CashbackValidator(BaseValidator):
             except:
                 continue
         if not negs:
-            return self.pass_result(rule, details=details)
+            return self.not_applicable_result(rule, details=details)
         max_allowed = max(rule.get('params', {}).get('absolute_limit', 2000),
                           loan * rule.get('params', {}).get('percent_limit', 0.01))
         for amt in negs:
@@ -283,7 +320,7 @@ class HomebuyerLTVValidator(BaseValidator):
         try:
             lp = float(ltv)
             if lp <= 1:
-                lp = lp * 100
+                lp = lp * 100   
         except:
             return self.not_applicable_result(rule)
         if lp > rule.get('params', {}).get('max_ltv', 95):

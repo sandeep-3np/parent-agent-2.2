@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=C:\Users\darin\Downloads\mortgage_rule_engine\mortgage_rule_engine\myenv
+set VIRTUAL_ENV=C:\Users\SandeepKumarMishra\Downloads\Mortgage Engine\Rule_Engine\mortgage_rule_engine\myenv
 
 if not defined PROMPT set PROMPT=$P$G
 

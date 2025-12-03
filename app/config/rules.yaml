@@ -271,7 +271,7 @@ rules:
 
   - id: "PPV-0018"
     name: "Gift funds condition for LTV>80 and multi-unit or secondary"
-    type: "condition_only"
+    type: "complex"
     validator: "GiftValidator"
     trigger:
       mortgage_type_applied_for: ["Conventional"]
@@ -314,7 +314,6 @@ rules:
     trigger:
       mortgage_type_applied_for: ["Conventional"]
       purpose_of_loan: ["Cash-Out Refinance"]
-      fraud_alert: ["ANY"]
     params:
       max_months: 6
     alert_message: "Fraud recording date within 6 months of estimated closing."
