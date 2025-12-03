@@ -46,7 +46,7 @@ los:
     path: "URLA Lender.Property and Loan Information.Property Type"
     default: ""
   estimated_closing_date:
-    path: "Disclosure Dates.Compliance Timeline.Date Tracking.Estimated Closing Date"
+    path: "Disclosure Dates.Estimated Closing Date"
     default: ""
   loan_amount:
     path: "URLA Lender.Property and Loan Information.Terms of Loan.Loan Amount"
@@ -108,9 +108,17 @@ appraisal:
     default: ""
 
 credit_report:
-  tradelines:
-    path: "CreditReport.Tradelines"
-    default: []
+  creditor_account_number:
+    path: "credit_report.Tradelines.Creditor Account Number"
+    default: ""
+
+  creditor_creditor_name:
+    path: "credit_report.Tradelines.Creditor Name"
+    default: ""
+
+  date_opened:
+    path: "credit_report.Tradelines.Date_Opened"
+    default: ""
 
 drive_report:
   fraud_alert:
