@@ -1,153 +1,159 @@
-# app/config/fields.yaml
-# Logical field names to nested document paths in different collections (los/title/appraisal/credit_report/drive_report).
-# Add or change paths according to your actual MongoDB document structure.
-
 los:
   purpose_of_loan:
-    path: "URLA Lender.Property and Loan Information.Purpose of Loan"
+    path: "URLA Lender -> Property and Loan Information -> Purpose of Loan"
     default: ""
   no_units:
-    path: "URLA Lender.Property and Loan Information.No Units"
+    path: "URLA Lender -> Property and Loan Information -> No Units"
     default: 1
   property_will_be:
-    path: "URLA Lender.Property and Loan Information.Property Will Be"
+    path: "URLA Lender -> Property and Loan Information -> Property Will Be"
     default: ""
   amortization_type:
-    path: "URLA Lender.Property and Loan Information.Mortgage Loan Information.Amortization Type"
+    path: "URLA Lender -> Property and Loan Information -> Mortgage Loan Information -> Amortization Type"
     default: ""
   mortgage_type_applied_for:
-    path: "URLA Lender.Property and Loan Information.Mortgage Loan Information.Mortgage Type Applied for"
+    path: "URLA Lender -> Property and Loan Information -> Mortgage Loan Information -> Mortgage Type Applied for"
     default: ""
   investor:
-    path: "Loan Details.Investor"
+    path: "Loan Details -> Investor"
     default: ""
   underwriting_risk_assess_type:
-    path: "Loan Details.Underwriting Risk Assess Type"
+    path: "Loan Details -> Underwriting Risk Assess Type"
     default: ""
   ltv:
-    path: "Loan Details.LTV"
+    path: "Loan Details -> LTV"
     default: None
   cltv:
-    path: "Loan Details.CLTV"
+    path: "Loan Details -> CLTV"
     default: None
   hcltv:
-    path: "Loan Details.HCLTV"
+    path: "Loan Details -> HCLTV"
     default: None
   dti:
-    path: "Loan Details.DTI"
+    path: "Loan Details -> DTI"
     default: None
   average_representative_credit_score:
-    path: "Loan Details.Average Represetative Credit Score"
+    path: "Loan Details -> Average Represetative Credit Score"
     default: None
   loan_program_detail:
-    path: "Loan Details.Loan Program Detail"
+    path: "Loan Details -> Loan Program Detail"
     default: ""
   property_type:
-    path: "URLA Lender.Property and Loan Information.Property Type"
+    path: "URLA Lender -> Property and Loan Information -> Property Type"
     default: ""
   estimated_closing_date:
-    path: "Disclosure Dates.Estimated Closing Date"
+    path: "Disclosure Dates -> Estimated Closing Date"
     default: ""
   loan_amount:
-    path: "URLA Lender.Property and Loan Information.Terms of Loan.Loan Amount"
+    path: "URLA Lender -> Property and Loan Information -> Terms of Loan -> Loan Amount"
     default: None
   cash_to_borrower:
-    path: "URLA 5.Closing Details.Summary of Transaction.Cash to Borrower"
+    path: "URLA 5 -> Closing Details -> Summary of Transaction -> Cash to Borrower"
     default: 0
   cash_from_borrower:
-    path: "URLA 5.Closing Details.Summary of Transaction.Cash From Borrower"
+    path: "URLA 5 -> Closing Details -> Summary of Transaction -> Cash From Borrower"
     default: 0
-  current_address_housing:
-    path: "URLA 1 Section 1: Borrower Information 1a  Personal Information - Borrower Current Address Housing"
+  borrower_current_address_housing:
+    path: "URLA 1 -> Section 1: Borrower Information -> 1a. Personal Information - Borrower -> Current Address -> Housing"
     default: {}
-  previous_address_housing:
-    path: "URLA 1.Section 1: Borrower Information.1a. Personal Information - Borrower.Former Address.Housing"
+  co_borrower_current_address_housing:
+    path: "URLA 1 -> Section 1: Borrower Information -> 1b. Personal Information - Co-Borrower -> Current Address -> Housing"
+    default: {}
+  borrower_previous_address_housing:
+    path: "URLA 1 -> Section 1: Borrower Information -> 1a. Personal Information - Borrower -> Former Address -> Housing"
+    default: {}
+  co_borrower_previous_address_housing:
+    path: "URLA 1 -> Section 1: Borrower Information -> 1b. Personal Information - Co-Borrower -> Former Address -> Housing"
     default: {}
   urla_lender_subject_street:
-    path: "URLA Lender.Property and Loan Information.Street Address"
+    path: "URLA Lender -> Property and Loan Information -> Street Address"
     default: ""
   urla_lender_subject_city:
-    path: "URLA Lender.Property and Loan Information.City"
+    path: "URLA Lender -> Property and Loan Information -> City"
     default: ""
   urla_lender_subject_state:
-    path: "URLA Lender.Property and Loan Information.State"
+    path: "URLA Lender -> Property and Loan Information -> State"
     default: ""
   urla_lender_subject_unit:
-    path: "URLA Lender.Property and Loan Information.Unit"
+    path: "URLA Lender -> Property and Loan Information -> Unit"
     default: ""
-  section_5a_ownership:
-    path: "URLA 4.Loan and Property Information.5a. About this Property and Your Money for this Loan.If YES, have you had an ownership interest in another property in the last three years?.Borrower"
+  borrower_section_5a_ownership:
+    path: "URLA 4 -> Loan and Property Information -> 5a. About this Property and Your Money for this Loan.If YES, have you had an ownership interest in another property in the last three years? If YES, complete (1) and (2) below -> Borrower"
+    default: ""
+  co_borrower_section_5a_ownership:
+    path: "URLA 4 -> Loan and Property Information -> 5a. About this Property and Your Money for this Loan.If YES, have you had an ownership interest in another property in the last three years? If YES, complete (1) and (2) below -> Co-Borrower"
     default: ""
   homebuyer_education_certificate:
-    path: "Borrower.Has The Borrower Completed Homeownership education(Group or web based classes) within the last 12 months?"
+    path: "URLA Lender -> Property and Loan Information -> Borrower -> Has The Borrower Completed Homeownership education(Group or web based classes) within the last 12 months?"
     default: "No"
   total_income:
-    path: "URLA 2.Borrower: Current/Self Employment and income.Total"
+    path: "URLA 2 -> Borrower: Current/Self Employment and income -> Total"
     default: 0
   liabilities_will_be_paid_off:
-    path: "URLA 3.Liabilities Detail.Will be paid off"
+    path: "URLA 3 -> Assets Detail -> Liabilities Detail -> Will be paid off"
     default: "No"
   liabilities_account_type:
-    path: "URLA 3.Liabilities Detail.Account Type"
+    path: "URLA 3 -> Assets Detail -> Liabilities Detail -> Account Type"
     default: ""
   liabilities_subject_property:
-    path: "URLA 3.Liabilities Detail.Subject Property"
+    path: "URLA 3 -> Assets Detail -> Liabilities Detail -> Subject Property"
     default: "No"
   liabilities_name:
-    path: "URLA 3.Liabilities Detail.Name"
+    path: "URLA 3 -> Assets Detail -> Liabilities Detail -> Name"
     default: ""
   liabilities_account_number:
-    path: "URLA 3.Liabilities Detail.Account Number"
+    path: "URLA 3 -> Assets Detail -> Liabilities Detail -> Account Number"
+    default: ""
+  real_estate_street_address:
+    path: "URLA 3 -> Assets Detail -> Real Estate Information -> Street Address"
     default: ""
   gift_amount:
-    path: "URLA 5.Closing Details.Summary of Transaction.Gift Amount"
+    path: "URLA 5 -> Closing Details -> Summary of Transaction -> Gift Amount"
     default: 0
   area_median_income:
-    path: "URLA 6.Area Median Income"
+    path: "URLA 6 -> Area Median Income"
     default: None
 
 title:
   chain_title_date:
-    path: "PropertyInfo.ChainOfTitle.Date"
+    path: "PropertyInfo -> ChainOfTitle -> Date"
     default: ""
 
 appraisal:
   appraisal_effective_date:
-    path: "Appraisal.EffectiveDate"
+    path: "Appraisal -> EffectiveDate"
     default: ""
   prior_sale_date:
-    path: "Appraisal.PriorSale.Date"
+    path: "Appraisal -> PriorSale -> Date"
     default: ""
 
 credit_report:
   creditor_account_number:
-    path: "credit_report.Tradelines.Creditor Account Number"
+    path: "credit_report -> Tradelines -> Creditor Account Number"
     default: ""
-
   creditor_creditor_name:
-    path: "credit_report.Tradelines.Creditor Name"
+    path: "credit_report -> Tradelines -> Creditor Name"
     default: ""
-
   date_opened:
-    path: "credit_report.Tradelines.Date_Opened"
+    path: "credit_report -> Tradelines -> Date_Opened"
     default: ""
 
 drive_report:
   fraud_alert:
-    path: "Drive.FraudAlerts.Level"
+    path: "Drive -> FraudAlerts -> Level"
     default: ""
   fraud_recorded_date:
-    path: "Drive.FraudAlerts.DateRecorded"
+    path: "Drive -> FraudAlerts -> DateRecorded"
     default: ""
   drive_street:
-    path: "Drive.Property.Address.Street"
+    path: "Drive -> Property -> Address -> Street"
     default: ""
   drive_city:
-    path: "Drive.Property.Address.City"
+    path: "Drive -> Property -> Address -> City"
     default: ""
   drive_state:
-    path: "Drive.Property.Address.State"
+    path: "Drive -> Property -> Address -> State"
     default: ""
   drive_unit:
-    path: "Drive.Property.Address.Unit"
+    path: "Drive -> Property -> Address -> Unit"
     default: ""

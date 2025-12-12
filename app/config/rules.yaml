@@ -356,9 +356,16 @@ rules:
     validator: "HomebuyerProgramValidator"
     trigger:
       loan_program_detail: ["HomeReady", "Home Possible", "HomeOne"]
-      current_address_housing: ["Rent", "No Housing expense"]
-      previous_address_housing: ["Rented", "No Primary Housing expenses", ""]
-      section_5a_ownership: ["Yes"]
+      or:
+        - borrower_current_address_housing: ["Rent", "No Housing expense"]
+        - co_borrower_current_address_housing: ["Rent", "No Housing expense"]
+      or:
+        - borrower_previous_address_housing: ["Rented", "No Primary Housing expenses", ""]
+        - co_borrower_previous_address_housing: ["Rented", "No Primary Housing expenses", ""]
+      real_estate_street_address: [""]  # blank address indicates first-time buyer
+      or:
+        - borrower_section_5a_ownership: ["Yes"]
+        - co_borrower_section_5a_ownership: ["Yes"]
     condition_message: "Homebuyer Education Certificate is missing."
 
   - id: "PPV-0026"

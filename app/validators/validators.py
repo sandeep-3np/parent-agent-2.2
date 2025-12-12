@@ -102,6 +102,17 @@ class GiftValidator(BaseValidator):
         gift_amount = resolver.resolve(context, 'los', 'gift_amount')
         cash_to = resolver.resolve(context, 'los', 'cash_to_borrower')
         details = {'gift_amount': gift_amount}
+
+        loan_program_detail_ = resolver.resolve(context,'los' ,'loan_program_detail')
+        print(f"Loan Program Detail: {loan_program_detail_}")
+        borrower_current_address_housing_ = resolver.resolve(context,'los' ,'borrower_current_address_housing')
+        print(f"Borrower Current Address Housing: {borrower_current_address_housing_}")
+        borrower_previous_address_housing_ = resolver.resolve(context,'los' , 'borrower_previous_address_housing')
+        print(f"Borrower Previous Address Housing: {borrower_previous_address_housing_}")
+        real_estate_street_address_ = resolver.resolve(context,'los' , 'real_estate_street_address')
+        print(f"Real Estate Street Address: {real_estate_street_address_}")
+        borrower_section_5a_ownership_ = resolver.resolve(context,'los' , 'borrower_section_5a_ownership')
+        print(f"Borrower Section 5a Ownership: {borrower_section_5a_ownership_}")
         try:
             g = float(gift_amount) if gift_amount is not None else 0.0
         except:
@@ -295,7 +306,7 @@ class CashbackValidator(BaseValidator):
                 continue
         if not negs:
             return self.not_applicable_result(rule, details=details)
-        max_allowed = max(rule.get('params', {}).get('absolute_limit', 2000),
+        max_allowed = min(rule.get('params', {}).get('absolute_limit', 2000),
                           loan * rule.get('params', {}).get('percent_limit', 0.01))
         for amt in negs:
             if amt > max_allowed:
